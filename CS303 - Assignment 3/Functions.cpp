@@ -174,30 +174,26 @@ void menu(Queue<T>& q, string& menuTitle) {
                     break;
                 }
 
-                // Show contents
+                // Display current queue
                 cout << "Current Queue: ";
                 q.display();
 
-                // Ask for target
+                // Get search target from user
                 cout << "Enter the value you want to search: ";
                 T choiceVal;
                 cin >> choiceVal;
 
-                // Copy queue to vector
-                vector<T> items;
-                Queue<T> tempQ = q; // copy the queue so we don't lose original
-                while (!tempQ.empty()) {
-                    items.push_back(tempQ.front());
-                    tempQ.pop();
-                }
+                // Deep copy queue into a vector for safe searching
+                vector<T> items = deepCopyToVector(q);
 
-                // Perform search
+                // Call the recursive function
                 int result = linear_search_last(items, choiceVal, 0);
 
+                // Output result
                 if (result != -1)
-                    cout << "Last occurrence of " << choiceVal << " found at position " << result << " in the queue." << endl;
+                    cout << "Last occurrence of \"" << choiceVal << "\" found at position " << result << " in the queue." << endl;
                 else
-                    cout << "Value not found in queue." << endl;
+                    cout << "Value \"" << choiceVal << "\" not found in queue." << endl;
 
                 break;
             }
@@ -261,10 +257,21 @@ int linear_search_last(const vector<T>& items, const T& target, size_t pos) {
         return index_in_rest;
 
     if (items[pos] == target)
-        return static_cast<int>(pos); // convert size_t to int for return
+        return static_cast<int>(pos);
 
     return -1;
 }
+template <typename T>
+vector<T> deepCopyToVector(Queue<T> q) {
+    // Passed by value deep copy (if your Queue class is copy-safe)
+    vector<T> items;
+    while (!q.empty()) {
+        items.push_back(q.front());
+        q.pop();
+    }
+    return items;
+}
+
 
 
 //Q3

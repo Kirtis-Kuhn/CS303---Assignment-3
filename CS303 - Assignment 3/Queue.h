@@ -28,6 +28,7 @@ private:
 public:
     // Constructor
     Queue();
+    Queue(const Queue<T>& other);
 
     // Destructor
     ~Queue();
@@ -39,12 +40,14 @@ public:
     int size() const;           // Get number of elements
     bool empty() const;         // Check if queue is empty
     bool contains(const T& value) const;
+    void clear();
 
     // Special function for assignment
     void move_to_rear();        // Move front element to rear
 
     // Utility
     void display() const;       // Optional: display queue content
+    Queue<T>& operator=(const Queue<T>&);
 };
 
 #include "Queue.cpp"

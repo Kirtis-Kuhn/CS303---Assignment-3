@@ -6,7 +6,39 @@ template <typename T>
 Queue<T>::Queue() : frontPtr(nullptr), rearPtr(nullptr), count(0) {}
 
 template <typename T>
+Queue<T>::Queue(const Queue<T>& other) {
+    frontPtr = rearPtr = nullptr;
+    Node* current = other.frontPtr;
+
+    while (current) {
+        push(current->data);  // Reuse your push() to add a deep copy
+        current = current->next;
+    }
+}
+
+template <typename T>
+Queue<T>& Queue<T>::operator=(const Queue<T>& other) {
+    if (this != &other) {
+        clear();  // Delete old contents safely
+
+        Node* current = other.frontPtr;
+        while (current) {
+            push(current->data);
+            current = current->next;
+        }
+    }
+    return *this;
+}
+
+template <typename T>
 Queue<T>::~Queue() {
+    while (!empty()) {
+        pop();
+    }
+}
+
+template <typename T>
+void Queue<T>::clear() {
     while (!empty()) {
         pop();
     }
@@ -50,7 +82,7 @@ int Queue<T>::size() const {
 
 template <typename T>
 bool Queue<T>::empty() const {
-    return count == 0;
+    return frontPtr == nullptr;
 }
 
 template <typename T>
