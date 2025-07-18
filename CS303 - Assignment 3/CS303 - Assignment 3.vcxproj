@@ -129,7 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Functions.h" />
-    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Queue.h" />
   </ItemGroup>
   <ItemGroup>
